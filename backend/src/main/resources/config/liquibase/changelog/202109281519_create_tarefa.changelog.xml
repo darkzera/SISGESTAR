@@ -12,11 +12,26 @@
             </column>
             <column name="nome" type="varchar(200)" />
             <column name="descricao" type="varchar(200)" />
+            <column name="id_st_tarefa" type="integer" />
         </createTable>
     </changeSet>
 
     <changeSet id="202109281519-1" author="lucas.cruz">
-        <dropColumn tableName="tarefa" columnName="descricao" />
+        <createTable tableName="st_tarefa">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="descricao" type="varchar(200)" />
+        </createTable>
     </changeSet>
+
+    <changeSet id="202109281519-2" author="lucas.cruz">
+        <addForeignKeyConstraint baseTableName="tarefa"
+                                 baseColumnNames="id_st_tarefa"
+                                 constraintName="fk_tarefa_st_tarefa"
+                                 referencedTableName="st_tarefa"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
 
 </databaseChangeLog>
