@@ -1,0 +1,9 @@
+version: '2'
+services:
+        sisgertar-postgres:
+                image: postgres:13.4-alpine
+                environment:
+                        - POSTGRES_PASSWORD=postgres
+                ports:
+                        - "5432:5432"
+                container_name: sisgertar-postgres
