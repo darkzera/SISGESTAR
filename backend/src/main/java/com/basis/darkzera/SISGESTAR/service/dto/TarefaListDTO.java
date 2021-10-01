@@ -9,4 +9,5 @@ public class TarefaListDTO {
 
     private Long id;
     private String nome;
+
 }

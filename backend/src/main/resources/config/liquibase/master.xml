@@ -7,4 +7,13 @@
 
     <include file="config/liquibase/changelog/202109281519_create_tarefa.changelog.xml"
              relativeToChangelogFile="false"/>
+
+    <include file="config/liquibase/changelog/202109301420_create_usuario.changelog.xml"
+             relativeToChangelogFile="false"/>
+
+    <include file="config/liquibase/changelog/202109301433_create_acompanhadores_tarefa.changelog.xml"
+             relativeToChangelogFile="false"/>
+
+    <include file="config/liquibase/changelog/202110011307_create_status_tarefa.changelog.xml"
+             relativeToChangelogFile="false"/>
 </databaseChangeLog>

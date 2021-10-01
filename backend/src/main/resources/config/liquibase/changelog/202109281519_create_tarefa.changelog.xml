@@ -33,5 +33,19 @@
                                  referencedColumnNames="id" />
     </changeSet>
 
+    <changeSet id="202109281519-4" author="lucas.cruz">
+        <createTable tableName="comentario">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="titulo" type="varchar(20)" />
+            <column name="descricao" type="varchar(150)" />
+            <column name="email" type="varchar(20)" />
+            <!--            <column name="dataComentario" type="varchar(50)" />-->
+        </createTable>
+    </changeSet>
+
+
+
 
 </databaseChangeLog>

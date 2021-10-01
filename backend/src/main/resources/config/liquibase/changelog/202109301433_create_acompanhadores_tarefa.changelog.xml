@@ -1,0 +1,33 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+               http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="202109301339-0" author="lucas.cruz">
+        <createTable tableName="rel_tarefa_usuario">
+            <column name="id_usuario" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_tarefa" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202109301339-1" author="lucas.cruz">
+        <addForeignKeyConstraint baseTableName="rel_tarefa_usuario"
+                                 baseColumnNames="id_usuario"
+                                 constraintName="fk_id_usuario_usuario"
+                                 referencedTableName="usuario"
+                                 referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="rel_tarefa_usuario"
+                                 baseColumnNames="id_tarefa"
+                                 constraintName="fk_id_tarefa_tarefa"
+                                 referencedTableName="tarefa"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+</databaseChangeLog>

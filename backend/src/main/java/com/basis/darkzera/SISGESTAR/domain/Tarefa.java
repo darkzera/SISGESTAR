@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,6 +22,23 @@ public class Tarefa {
 
     @Column(name = "descricao")
     private String descricao;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario_responsavel")
+    private Usuario responsavel;
+
+    @ManyToMany
+    @JoinTable(
+            name = "rel_tarefa_usuario",
+            joinColumns = { @JoinColumn (name = "id_tarefa")},
+            inverseJoinColumns = { @JoinColumn (name = "id_usuario")})
+
+    private List<Usuario> acompanhadores = new ArrayList<>();
+
+    @Column(name = "id_st_tarefa")
+    private Long idStatus;
+
+
 
 
 }

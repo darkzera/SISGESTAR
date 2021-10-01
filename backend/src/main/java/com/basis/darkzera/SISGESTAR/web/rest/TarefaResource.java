@@ -1,8 +1,10 @@
 package com.basis.darkzera.SISGESTAR.web.rest;
 
+import com.basis.darkzera.SISGESTAR.domain.Tarefa;
 import com.basis.darkzera.SISGESTAR.service.TarefaService;
 import com.basis.darkzera.SISGESTAR.service.dto.TarefaDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.TarefaListDTO;
+import com.basis.darkzera.SISGESTAR.service.dto.UsuarioDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -13,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tarefas")
 @RequiredArgsConstructor
-public class TarefaResoure {
+public class TarefaResource {
 
     private final TarefaService tarefaService;
 
@@ -53,4 +55,12 @@ public class TarefaResoure {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<TarefaDTO> updateStatus(@PathVariable("id") Long id,
+                                                  @RequestBody Tarefa tarefa,
+                                                  @RequestParam("hash") String hash){
+        tarefa.setId(id);
+        return ResponseEntity.ok(tarefaService.atualizarStatus(tarefa, hash));
+
+    }
 }
