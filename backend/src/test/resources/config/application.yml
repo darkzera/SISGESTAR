@@ -1,0 +1,12 @@
+logging:
+  level:
+    ROOT: INFO
+    liquibase: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.type: INFO
+    org.h2: INFO
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:db
