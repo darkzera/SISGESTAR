@@ -1,8 +1,10 @@
 package com.basis.darkzera.SISGESTAR.domain.enumerations;
 
+import com.basis.darkzera.SISGESTAR.service.error.StatusInexistenceException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.util.Arrays;
 
 @Getter
 @AllArgsConstructor
@@ -15,4 +17,10 @@ public enum StatusTarefaEnum {
 
     private Long id;
     private String descricao;
+
+    public static StatusTarefaEnum obterPorId(Long id){
+        return Arrays.stream(StatusTarefaEnum.values())
+                .filter(enumeration -> id.equals(enumeration.getId()))
+                .findFirst().orElseThrow(StatusInexistenceException::new);
+    }
 }

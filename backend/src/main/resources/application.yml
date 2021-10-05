@@ -8,3 +8,22 @@ spring:
   liquibase:
     change-log: classpath:/config/liquibase/master.xml
 #    drop-first: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: Darkzera.treinamentobasis@gmail.com
+    password: skullrv2344
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          quitwait: false
+
+  application:
+    mail:
+      endereco-remetente: email@email.com
+      nome-remetente: SISGESTAR

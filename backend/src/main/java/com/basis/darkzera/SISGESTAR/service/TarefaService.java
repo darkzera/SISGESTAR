@@ -1,9 +1,11 @@
 package com.basis.darkzera.SISGESTAR.service;
 
 import com.basis.darkzera.SISGESTAR.domain.Tarefa;
+import com.basis.darkzera.SISGESTAR.domain.Usuario;
 import com.basis.darkzera.SISGESTAR.domain.enumerations.StatusTarefaEnum;
 import com.basis.darkzera.SISGESTAR.repository.TarefaRepository;
 import com.basis.darkzera.SISGESTAR.repository.UsuarioRepository;
+import com.basis.darkzera.SISGESTAR.service.dto.EmailDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.TarefaDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.TarefaListDTO;
 import com.basis.darkzera.SISGESTAR.service.error.TarefaNaoEncontradaException;
@@ -14,6 +16,7 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,9 @@ public class TarefaService {
     private final TarefaMapper tarefaMapper;
 
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
+
+    private final SendMailService sendMailService;
 
     public List<TarefaListDTO> findAll(){
         return tarefaRepository.findAll().stream()
@@ -33,8 +39,9 @@ public class TarefaService {
     }
 
     public TarefaDTO save(TarefaDTO tarefaDTO){
+        validarResponsavel(tarefaDTO);
+        definirStatusInicial(tarefaDTO);
         Tarefa tarefa = tarefaMapper.toEntity(tarefaDTO);
-        tarefa.setIdStatus(StatusTarefaEnum.A_FAZER.getId());
         tarefaRepository.save(tarefa);
         return tarefaMapper.toDTO(tarefa);
     }
@@ -45,6 +52,12 @@ public class TarefaService {
 
     public void deleteById(Long id){
         tarefaRepository.deleteById(id);
+    }
+
+    private void validarResponsavel(TarefaDTO tarefaDTO){
+        if (Objects.nonNull(tarefaDTO.getIdResponsavel())){
+            usuarioService.obterUsuarioPorId(tarefaDTO.getIdResponsavel());
+        }
     }
 
     public TarefaDTO atualizarStatus(Tarefa tarefa, String hash) {
@@ -60,6 +73,26 @@ public class TarefaService {
         if (!tarefa.getResponsavel().getHash().equals(hash)){
             throw new UsuarioNaoAutorizadoException();
         }
+    }
+
+    private void definirStatusInicial(TarefaDTO tarefa) {
+        tarefa.setIdStatus(StatusTarefaEnum.A_FAZER.getId());
+    }
+
+    private void notificarAcompanhadores(Tarefa tarefa){
+        tarefa.getAcompanhadores().forEach(acompanhador -> {
+            EmailDTO emailDTO = construirEmail(tarefa, acompanhador);
+            sendMailService.sendMail(emailDTO);
+        });
+    }
+
+    private EmailDTO construirEmail(Tarefa tarefa, Usuario acompanhador) {
+        EmailDTO emailDTO = new EmailDTO();
+        emailDTO.setAssunto("Movimentaçao em Tarefa " + tarefa.getNome());
+        emailDTO.setCorpo("O novo status da tarefa é " +
+                StatusTarefaEnum.obterPorId(tarefa.getIdStatus()).getDescricao());
+        emailDTO.setDestinatario(acompanhador.getEmail());
+        return emailDTO;
     }
 
 }

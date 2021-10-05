@@ -4,6 +4,7 @@ import com.basis.darkzera.SISGESTAR.domain.Usuario;
 import com.basis.darkzera.SISGESTAR.repository.UsuarioRepository;
 import com.basis.darkzera.SISGESTAR.service.dto.UsuarioDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.UsuarioListDTO;
+import com.basis.darkzera.SISGESTAR.service.error.UsuarioNaoEncontradoException;
 import com.basis.darkzera.SISGESTAR.service.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
         return usuarioMapper.toDTO(usuario);
     }
+
     public Optional<UsuarioDTO> findById(Long id){
         return usuarioRepository.findById(id)
                 .map(usuarioMapper::toDTO);
@@ -39,6 +41,12 @@ public class UsuarioService {
 
     public void deleteById(Long id){
         usuarioRepository.deleteById(id);
+    }
+
+    public UsuarioDTO obterUsuarioPorId(Long id){
+        Usuario usuarioFound = usuarioRepository.findById(id)
+                .orElseThrow(UsuarioNaoEncontradoException::new);
+        return usuarioMapper.toDTO(usuarioFound);
     }
 
 }
