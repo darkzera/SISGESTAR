@@ -3,10 +3,10 @@ package com.basis.darkzera.SISGESTAR.service.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class UsuarioDTO {
-    private Long id;
-    private String name;
-    private String email;
+@Setter
+public class TarefaFilterDTO {
+
+    private String nome;
+
 }

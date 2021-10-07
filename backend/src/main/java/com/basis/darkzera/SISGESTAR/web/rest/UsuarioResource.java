@@ -25,6 +25,7 @@ public class UsuarioResource {
 
     @GetMapping
     ResponseEntity<List<UsuarioDTO>> findAll(){
+        //TODO: Should not return hash from user - FIXME
         return ResponseEntity.ok(
                 usuarioService.findAll()
         );
@@ -34,6 +35,13 @@ public class UsuarioResource {
     public ResponseEntity<UsuarioDTO> findById(@PathVariable("id") Long id){
         return ResponseEntity.of(
                 usuarioService.findById(id)
+        );
+    }
+
+    @GetMapping("/obter-por-hash/{hash}")
+    public ResponseEntity<UsuarioDTO> obterPorHash(@PathVariable("hash") String hash){
+        return ResponseEntity.of(
+                usuarioService.obterPorHash(hash)
         );
     }
 

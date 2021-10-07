@@ -23,7 +23,7 @@ public class Tarefa {
     @Column(name = "descricao")
     private String descricao;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario_responsavel")
     private Usuario responsavel;
 
@@ -37,7 +37,6 @@ public class Tarefa {
 
     @Column(name = "id_st_tarefa")
     private Long idStatus;
-
 
 
 

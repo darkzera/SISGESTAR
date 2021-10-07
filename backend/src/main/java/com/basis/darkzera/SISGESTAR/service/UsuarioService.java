@@ -49,4 +49,9 @@ public class UsuarioService {
         return usuarioMapper.toDTO(usuarioFound);
     }
 
+    public Optional<UsuarioDTO> obterPorHash(String hash){
+        return usuarioRepository.findByHash(hash).map(usuarioMapper::toDTO);
+    }
+
+
 }

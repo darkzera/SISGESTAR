@@ -1,4 +1,7 @@
 spring:
+  server:
+    error:
+      include-stacktrace=never:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/postgres
@@ -23,7 +26,7 @@ spring:
             required: true
           quitwait: false
 
-  application:
-    mail:
-      endereco-remetente: email@email.com
-      nome-remetente: SISGESTAR
+application:
+  mail:
+    endereco-remetente: Darkzera.treinamentobasis@gmail.com
+    nome-remetente: llll
