@@ -21,4 +21,8 @@ public class Comentario {
     @Column(name = "descricao")
     private String descricao;
 
+//    @Column(name = "autor")
+//    private String autor;
+
+
 }

@@ -36,6 +36,7 @@ public class SendMailService {
         message.setTo(emailDTO.getDestinatario());
         message.setFrom(properties.getEnderecoRemetente(), properties.getNomeRemetente());
         message.setSubject(emailDTO.getAssunto());
-        message.setText(emailDTO.getCorpo(), true);
+        // TODO FINISH ME
+        message.setText("<h1> Titulo </h1> <p>" + emailDTO.getCorpo() + "\n </p>" ,true);
     }
 }

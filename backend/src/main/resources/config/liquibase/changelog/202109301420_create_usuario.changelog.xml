@@ -9,9 +9,9 @@
             <column name="id" type="integer" autoIncrement="true">
                 <constraints primaryKey="true" />
             </column>
-            <column name="nome" type="varchar(50)" />
+            <column name="name" type="varchar(50)" />
             <column name="cpf" type="varchar(15)" />
-            <column name="email" type="varchar(20)" />
+            <column name="email" type="varchar(50)" />
             <column name="hash" type="varchar(50)" />
         </createTable>
     </changeSet>

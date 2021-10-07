@@ -23,4 +23,5 @@ public enum StatusTarefaEnum {
                 .filter(enumeration -> id.equals(enumeration.getId()))
                 .findFirst().orElseThrow(StatusInexistenceException::new);
     }
+
 }

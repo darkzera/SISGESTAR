@@ -66,6 +66,7 @@ public class TarefaService {
             throw new UsuarioNaoAutorizadoException();
         }
     }
+
     public TarefaDTO atualizarStatus(Tarefa tarefa, String hash) {
         Tarefa tarefaEmBanco = tarefaRepository.findById(tarefa.getId())
                 .orElseThrow(TarefaNaoEncontradaException::new);
@@ -73,12 +74,12 @@ public class TarefaService {
         tarefaEmBanco.setIdStatus(tarefa.getIdStatus());
         tarefaRepository.save(tarefaEmBanco);
         construirEmail(tarefaEmBanco, tarefaEmBanco.getResponsavel());
+
 //        TODO FIX ME
 //        notificarAcompanhadores(tarefaEmBanco);
+
         return tarefaMapper.toDTO(tarefaEmBanco);
     }
-
-
 
     private void definirStatusInicial(TarefaDTO tarefa) {
         tarefa.setIdStatus(StatusTarefaEnum.A_FAZER.getId());

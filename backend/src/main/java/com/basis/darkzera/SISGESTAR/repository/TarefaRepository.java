@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Repository
 public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
@@ -22,6 +23,7 @@ public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
                     " tarefa.nome LIKE %:#{#filtro.nome}%"
     )
     Page<TarefaListDTO> filtrarTarefas(@Param("filtro") TarefaFilterDTO tarefaFilterDTO, Pageable page);
+
 
 
 }
