@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(
         value = HttpStatus.BAD_REQUEST,
-        reason = "O status em questao nao existe"
+        // TODO FIXME - trocar msg ++ refatorar nome
+        reason = "O status nao existe"
 )
 public class StatusInexistenceException extends RuntimeException{
 }
