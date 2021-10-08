@@ -16,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -90,12 +92,12 @@ public class TarefaResourceTest extends BaseIntTest {
     // TODO FIXME
     @Test
     public void atualizaStatusTarefaComSucess() throws Exception{
-
         // TODO - Revisar
         // As implementacoes feitas no *Builder ?
         // Posso instanciar tambem um UsuarioBuilder na camada de teste de Tarefas?
 
-        UsuarioDTO usuarioResponsavel = usuarioBuilder.persistirUsuario(usuarioBuilder.createUsuarioDTO());
+        UsuarioDTO usuarioResponsavel =
+                usuarioBuilder.persistirUsuario(usuarioBuilder.createUsuarioDTO());
         TarefaDTO tarefaDTO = tarefaBuilder.createTarefaDTO();
         tarefaDTO.setIdResponsavel(usuarioResponsavel.getId());
         tarefaBuilder.persistirTarefa(tarefaDTO);

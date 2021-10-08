@@ -15,6 +15,7 @@ public class UsuarioBuilder {
 
     @Autowired
     UsuarioService usuarioService;
+
     @Autowired
     UsuarioRepository usuarioRepository;
 
