@@ -36,7 +36,8 @@ public class SendMailService {
         message.setTo(emailDTO.getDestinatario());
         message.setFrom(properties.getEnderecoRemetente(), properties.getNomeRemetente());
         message.setSubject(emailDTO.getAssunto());
-        // TODO FINISH ME
+
+        // TODO - Terminar de implementar o template html para envio do(s) email
         message.setText("<h1> Titulo </h1> <p>" + emailDTO.getCorpo() + "\n </p>" ,true);
     }
 }

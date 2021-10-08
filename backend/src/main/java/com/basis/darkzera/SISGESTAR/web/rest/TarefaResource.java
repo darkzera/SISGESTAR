@@ -29,8 +29,6 @@ public class TarefaResource {
     @GetMapping
     public ResponseEntity<Page<TarefaListDTO>> obterTodosComFiltro(@ModelAttribute TarefaFilterDTO tarefaFilterDTO,
                                                                    Pageable p) {
-        // TODO: FIXME - Nao ta retornando os resultados esperados
-        //               o service ta usando o obterComFiltro. Trocar por findall generico
         return  ResponseEntity.ok(
                 tarefaService.findAll(tarefaFilterDTO, p));
     }

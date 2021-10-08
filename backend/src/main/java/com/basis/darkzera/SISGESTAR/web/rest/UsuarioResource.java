@@ -25,10 +25,7 @@ public class UsuarioResource {
 
     @GetMapping
     ResponseEntity<List<UsuarioDTO>> findAll(){
-        //TODO: Should not return hash from user - FIXME
-        return ResponseEntity.ok(
-                usuarioService.findAll()
-        );
+        return ResponseEntity.ok(usuarioService.findAll());
     }
 
     @GetMapping("/{id}")

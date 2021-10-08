@@ -2,10 +2,13 @@ package com.basis.darkzera.SISGESTAR.builder;
 
 import com.basis.darkzera.SISGESTAR.domain.Tarefa;
 import com.basis.darkzera.SISGESTAR.repository.TarefaRepository;
+import com.basis.darkzera.SISGESTAR.service.TarefaService;
 import com.basis.darkzera.SISGESTAR.service.dto.TarefaDTO;
 import com.basis.darkzera.SISGESTAR.service.mapper.TarefaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.xml.bind.SchemaOutputResolver;
 
 @Component
 public class TarefaBuilder {
@@ -25,10 +28,19 @@ public class TarefaBuilder {
     public TarefaDTO persistirTarefa(TarefaDTO tarefaDTO) {
         Tarefa tarefa = tarefaMapper.toEntity(tarefaDTO);
 
-        if (tarefa.getResponsavel().getId() == null) {
-            tarefa.setResponsavel(null);
-        }
+//        if (tarefa.getResponsavel().getId() == null) {
+//            tarefa.setResponsavel(null);
+//        }
+
         tarefa = tarefaRepository.save(tarefa);
         return tarefaMapper.toDTO(tarefa);
     }
+
+    public TarefaDTO createTarefaDTONovoStatus(){
+        TarefaDTO tarefaDTO = new TarefaDTO();
+        tarefaDTO.setIdStatus(2L);
+        return tarefaDTO;
+
+    }
+
 }

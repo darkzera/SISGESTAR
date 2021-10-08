@@ -60,11 +60,10 @@ public class UsuarioService {
         return usuarioMapper.toDTO(usuarioFound);
     }
 
-    private boolean emailExists(Usuario usuario){
-        boolean exist =
-                usuarioRepository.findByEmail(usuario.getEmail()).isPresent() ?  true : false;
 
-        return exist;
+    // TODO - ???? WTF
+    private boolean emailExists(Usuario usuario){
+        return usuarioRepository.findByEmail(usuario.getEmail()).isPresent();
     }
 
     public Optional<UsuarioDTO> obterPorHash(String hash){
@@ -73,8 +72,6 @@ public class UsuarioService {
 
     private EmailDTO construirEmailEnvioHashPwd(Usuario usuario) {
         EmailDTO emailDTO = new EmailDTO();
-//        Usuario usuarioBanco = usuarioRepository.findById(usuario.getId())
-//                .orElseThrow(UsuarioNaoEncontradoException::new);
         emailDTO.setAssunto("" + usuario.getName() + ", nova conta criada:");
         emailDTO.setCorpo("Nova conta criada para:  " + usuario.getEmail() + "(ID: " + usuario.getName() + " )" +
                 "\nHash password: " + usuario.getHash());

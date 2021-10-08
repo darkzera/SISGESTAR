@@ -1,6 +1,6 @@
 package com.basis.darkzera.SISGESTAR.domain.enumerations;
 
-import com.basis.darkzera.SISGESTAR.service.error.StatusInexistenceException;
+import com.basis.darkzera.SISGESTAR.service.error.StatusInexistenteException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,7 +21,7 @@ public enum StatusTarefaEnum {
     public static StatusTarefaEnum obterPorId(Long id){
         return Arrays.stream(StatusTarefaEnum.values())
                 .filter(enumeration -> id.equals(enumeration.getId()))
-                .findFirst().orElseThrow(StatusInexistenceException::new);
+                .findFirst().orElseThrow(StatusInexistenteException::new);
     }
 
 }

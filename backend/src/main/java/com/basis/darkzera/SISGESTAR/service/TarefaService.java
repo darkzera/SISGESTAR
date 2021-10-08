@@ -44,6 +44,10 @@ public class TarefaService {
         definirStatusInicial(tarefaDTO);
         Tarefa tarefa = tarefaMapper.toEntity(tarefaDTO);
         tarefaRepository.save(tarefa);
+
+        // TODO - So adicionar os usuarios na lista nao contempla o insert no banco de dados?
+        tarefa.getAcompanhadores().add(tarefa.getResponsavel());
+
         return tarefaMapper.toDTO(tarefa);
     }
 

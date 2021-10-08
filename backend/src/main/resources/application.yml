@@ -1,7 +1,7 @@
 spring:
   server:
     error:
-      include-stacktrace=never:
+      include-stacktrace: never
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
