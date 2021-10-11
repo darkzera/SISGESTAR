@@ -23,21 +23,22 @@ public class Tarefa {
     @Column(name = "descricao")
     private String descricao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario_responsavel")
     private Usuario responsavel;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "rel_tarefa_usuario",
             joinColumns = { @JoinColumn (name = "id_tarefa")},
             inverseJoinColumns = { @JoinColumn (name = "id_usuario")})
-
     private List<Usuario> acompanhadores = new ArrayList<>();
 
     @Column(name = "id_st_tarefa")
     private Long idStatus;
 
+    @OneToMany(mappedBy = "tarefa")
+    private List<Comentario> comentarios = new ArrayList<>();
 
 
 }

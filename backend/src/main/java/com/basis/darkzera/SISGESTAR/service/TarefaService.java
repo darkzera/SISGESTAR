@@ -9,11 +9,15 @@ import com.basis.darkzera.SISGESTAR.service.dto.EmailDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.TarefaDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.TarefaFilterDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.TarefaListDTO;
+import com.basis.darkzera.SISGESTAR.service.dto.UsuarioDTO;
 import com.basis.darkzera.SISGESTAR.service.error.TarefaNaoEncontradaException;
 import com.basis.darkzera.SISGESTAR.service.error.UsuarioNaoAutorizadoException;
+import com.basis.darkzera.SISGESTAR.service.error.UsuarioNaoEncontradoException;
 import com.basis.darkzera.SISGESTAR.service.mapper.TarefaMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,13 +28,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class TarefaService {
 
     private final TarefaRepository tarefaRepository;
     private final TarefaMapper tarefaMapper;
 
-    private final UsuarioRepository usuarioRepository;
     private final UsuarioService usuarioService;
 
     private final SendMailService sendMailService;
@@ -43,11 +47,8 @@ public class TarefaService {
         validarResponsavel(tarefaDTO);
         definirStatusInicial(tarefaDTO);
         Tarefa tarefa = tarefaMapper.toEntity(tarefaDTO);
-        tarefaRepository.save(tarefa);
-
-        // TODO - So adicionar os usuarios na lista nao contempla o insert no banco de dados?
         tarefa.getAcompanhadores().add(tarefa.getResponsavel());
-
+        tarefa = tarefaRepository.save(tarefa);
         return tarefaMapper.toDTO(tarefa);
     }
 
@@ -66,9 +67,16 @@ public class TarefaService {
     }
 
     private void validarResponsavel(Tarefa tarefa, String hash){
-        if (!tarefa.getResponsavel().getHash().equals(hash)){
+        UsuarioDTO responsavel = obterResponsavelPelaTarefa(tarefa);
+        if (!responsavel.getHash().equals(hash)){
             throw new UsuarioNaoAutorizadoException();
         }
+    }
+
+    private UsuarioDTO obterResponsavelPelaTarefa(Tarefa tarefa){
+        // Usar DTO aqui ou n?
+        Usuario responsavel = tarefa.getResponsavel();
+        return usuarioService.obterUsuarioPorId(responsavel.getId());
     }
 
     public TarefaDTO atualizarStatus(Tarefa tarefa, String hash) {

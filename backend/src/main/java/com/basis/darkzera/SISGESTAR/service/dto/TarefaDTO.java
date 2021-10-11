@@ -20,5 +20,11 @@ public class TarefaDTO {
     private Long idResponsavel;
     private Long idStatus;
     private List<UsuarioDTO> acompanhadores = new ArrayList<>();
+    private List<ComentarioDTO> comentarios = new ArrayList<>();
+
+    public TarefaDTO(String nome, String descricao){
+        this.nome = nome;
+        this.descricao = descricao;
+    }
 
 }
