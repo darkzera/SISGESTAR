@@ -1,0 +1,50 @@
+<div class="content-section implementation">
+    <p-card header="{{tarefaDetalhes.nome}} - {{tarefaDetalhes.id}}" subheader="{{tarefaDetalhes.descricao}}"
+        [style]="{width: '360px'}" styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+        </ng-template>
+        <p>
+            {{ tarefaDetalhes.nome}}
+        </p>
+  
+        <ng-template pTemplate="footer">
+        </ng-template>
+
+    </p-card>
+</div>
+
+<div class="content-section documentation">
+    <p-tabView>
+        <p-tabPanel header="Descrição:">
+            <h3> Descricao </h3>
+            {{ tarefaDetalhes.descricao }}
+            {{ tarefaDetalhes.descricao }}
+            Responsavel: {{ tarefaDetalhes.idResponsavel }}
+            STATUS: {{ tarefaDetalhes.idStatus}}
+            <app-code lang="typescript" ngNonBindable ngPreserveWhitespaces>
+            </app-code>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+
+<div class="ui-g ui-g-12 flex-between" genericFormFooterButtons>
+    <button
+      pButton
+      type="submit"
+      label="seguir"
+      icon="ui-icon-save"></button>
+
+    <button
+      class="ui-button-secondary"
+      pButton type="button"
+      label="Ver comentarios"
+      (click)="showComentarios()"
+      icon="ui-icon-cancel"
+    ></button>
+</div>
+
+<p-dialog [(visible)]="showDialog"
+          (onHide)="closeModal()"
+>
+<app-modal-comentarios-tarefa #comentarios [modal]="true"></app-modal-comentarios-tarefa>
+</p-dialog>

@@ -1,9 +1,13 @@
 package com.basis.darkzera.SISGESTAR.domain;
 
+import liquibase.pro.packaged.F;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -21,8 +25,15 @@ public class Comentario {
     @Column(name = "descricao")
     private String descricao;
 
-//    @Column(name = "autor")
-//    private String autor;
+    @Column(name = "data_comentario")
+    private LocalDateTime data_comentario;
 
+    @JoinColumn(name = "id_tarefa")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Tarefa tarefa;
+
+    @JoinColumn(name = "id_usuario")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Usuario usuario;
 
 }

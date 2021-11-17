@@ -1,0 +1,41 @@
+<app-generic-form [modal]="modal">
+  <form class="ui-g ui-fluid" [formGroup]="form" novalidate genericFormRef (ngSubmit)="saveForm($event)">
+    <h1 genericFormHeader class="ui-g-12">{{title}}</h1>
+    <div class="ui-g form-group ui-g-12">
+      <div class="ui-g-12">
+        <app-generic-input>
+          <input sInputRef type="text" formControlName="titulo" [sLabel]="MSG.TAREFA_NOME" class="ui-g-12" />
+        </app-generic-input>
+      </div>
+      <div class="ui-g-12">
+        <app-generic-input>
+          <input class="ui-g-12" type="text" formControlName="descricao" [sLabel]="MSG.TAREFA_DESCRICAO" sInputRef>
+        </app-generic-input>
+      </div>
+      <!-- <div class="ui-g-12">
+                <app-generic-input>
+                  <input
+                    class="ui-g-12"
+                    type="text"
+                    formControlName="idStatus"
+                    [sLabel]="MSG.TAREFA_ID_STATUS"
+                    sInputRef
+                  >
+                </app-generic-input>
+              </div> -->
+
+      <div class="ui-g-12">
+        <app-generic-input>
+          <p-dropdown [options]="candidatosResponsavel" formControlName="idResponsavel" [filter]="true"
+            [sLabel]="MSG.RESPONSAVEL_NOME" sInputRef></p-dropdown>
+        </app-generic-input>
+      </div>
+
+    </div>
+    <div class="ui-g ui-g-12 flex-between" genericFormFooterButtons>
+      <button pButton type="submit" label="save" icon="ui-icon-save"></button>
+      <button class="ui-button-secondary" pButton type="button" label="Limpar Formulario" (click)="clearForm()"
+        icon="ui-icon-cancel"></button>
+    </div>
+  </form>
+</app-generic-form>

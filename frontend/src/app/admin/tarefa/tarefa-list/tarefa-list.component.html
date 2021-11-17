@@ -1,0 +1,14 @@
+<app-generic-table
+  #tarefa
+  [columns]="COLUMNS"
+  [buttons]="BUTTONS"
+ ></app-generic-table>
+
+  <p-confirmDialog></p-confirmDialog>
+
+
+<p-dialog [(visible)]="showDialog"
+          (onHide)="closeModal()"
+>
+<app-modal-details-tarefa #detail [modal]="true"></app-modal-details-tarefa>
+</p-dialog>

@@ -16,4 +16,8 @@
 
     <include file="config/liquibase/changelog/202110011307_create_status_tarefa.changelog.xml"
              relativeToChangelogFile="false"/>
+
+    <include file="config/liquibase/changelog/202110171655_create_field_data_TarefaTable.changelog.xml"
+             relativeToChangelogFile="false"/>
+
 </databaseChangeLog>

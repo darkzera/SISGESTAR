@@ -2,6 +2,7 @@ package com.basis.darkzera.SISGESTAR.web.rest;
 
 import com.basis.darkzera.SISGESTAR.domain.Usuario;
 import com.basis.darkzera.SISGESTAR.service.UsuarioService;
+import com.basis.darkzera.SISGESTAR.service.dto.SelectDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.UsuarioDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.UsuarioListDTO;
 import com.basis.darkzera.SISGESTAR.service.mapper.ComentarioMapper;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 @RequestMapping("/api/usuarios/")
@@ -26,6 +29,11 @@ public class UsuarioResource {
     @GetMapping
     ResponseEntity<List<UsuarioDTO>> findAll(){
         return ResponseEntity.ok(usuarioService.findAll());
+    }
+
+    @GetMapping("/findAllDrop")
+    ResponseEntity<List<SelectDTO>> findAllWithDropDown() {
+        return ResponseEntity.ok(usuarioService.selectDropDown());
     }
 
     @GetMapping("/{id}")

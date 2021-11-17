@@ -1,0 +1,9 @@
+<h2> Comentarios: </h2>
+<tr *ngFor="let comentario of comentarios">
+    <p-fieldset legend="User: {{comentario.idUsuario}}" [toggleable]="true" [collapsed]="true">
+        <p>
+            {{ comentario.descricao }}
+            {{ comentario.data_comentario}}
+        </p>
+    </p-fieldset>
+</tr>

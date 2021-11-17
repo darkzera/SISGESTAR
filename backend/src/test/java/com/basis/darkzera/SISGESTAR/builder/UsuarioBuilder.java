@@ -14,18 +14,18 @@ import org.springframework.stereotype.Component;
 public class UsuarioBuilder {
 
     @Autowired
-    UsuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
-    UsuarioMapper usuarioMapper;
+    private UsuarioMapper usuarioMapper;
 
     public UsuarioDTO createUsuarioDTO() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setName("Nome Teste");
-        usuarioDTO.setEmail("email@teste.com");
+        usuarioDTO.setName("Nome - Usuario - Teste");
+        usuarioDTO.setEmail("email@gmail.com");
         return usuarioDTO;
     }
 
@@ -34,10 +34,10 @@ public class UsuarioBuilder {
         return usuarioService.save(usuarioDTO);
     }
 
-    public String getHashValido(UsuarioDTO usuarioDTO){
-        // Preciso do getHash -> uso diretamente o repositorio
-        return usuarioRepository.findById(usuarioDTO.getId())
-                .orElseThrow(UsuarioNaoEncontradoException::new).getHash();
+    public String getHashValido(Long responsavelId){
+        return usuarioRepository.findById(responsavelId)
+                .map(Usuario::getHash)
+                .get();
     }
 
 }

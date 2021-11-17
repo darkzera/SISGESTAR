@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "application.mail")
 public class MailProperties {
-
     private String enderecoRemetente;
     private String nomeRemetente;
-
 }

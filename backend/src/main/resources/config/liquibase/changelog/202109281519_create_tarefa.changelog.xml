@@ -40,12 +40,22 @@
             </column>
             <column name="titulo" type="varchar(20)" />
             <column name="descricao" type="varchar(150)" />
-            <column name="email" type="varchar(20)" />
-            <!--            <column name="dataComentario" type="varchar(50)" />-->
+            <column name="data_comentario" type="DATETIME" />
+            <column name="id_tarefa" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_usuario" type="integer">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
-
-
+    <changeSet id="202109281519-5" author="lucas.cruz">
+        <addForeignKeyConstraint baseTableName="comentario"
+                                 baseColumnNames="id_tarefa"
+                                 constraintName="fk_id_tarefa_tarefa"
+                                 referencedTableName="tarefa"
+                                 referencedColumnNames="id" />
+    </changeSet>
 
 </databaseChangeLog>

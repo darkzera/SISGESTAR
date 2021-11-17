@@ -20,8 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,12 +35,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TarefaService {
 
-    private final TarefaRepository tarefaRepository;
+    public final TarefaRepository tarefaRepository;
     private final TarefaMapper tarefaMapper;
 
     private final UsuarioService usuarioService;
-
     private final SendMailService sendMailService;
+
 
     public Page<TarefaListDTO> findAll(TarefaFilterDTO tarefaDTO, Pageable page){
         return tarefaRepository.filtrarTarefas(tarefaDTO, page);
@@ -46,9 +49,14 @@ public class TarefaService {
     public TarefaDTO save(TarefaDTO tarefaDTO){
         validarResponsavel(tarefaDTO);
         definirStatusInicial(tarefaDTO);
+        //
+        tarefaDTO.setDataAbertura(LocalDateTime.now());
+        //
         Tarefa tarefa = tarefaMapper.toEntity(tarefaDTO);
+        tarefa = tarefaRepository.save(tarefa);
         tarefa.getAcompanhadores().add(tarefa.getResponsavel());
         tarefa = tarefaRepository.save(tarefa);
+
         return tarefaMapper.toDTO(tarefa);
     }
 
@@ -86,9 +94,7 @@ public class TarefaService {
         tarefaEmBanco.setIdStatus(tarefa.getIdStatus());
         tarefaRepository.save(tarefaEmBanco);
         construirEmail(tarefaEmBanco, tarefaEmBanco.getResponsavel());
-
-//        TODO FIX ME
-//        notificarAcompanhadores(tarefaEmBanco);
+        notificarAcompanhadores(tarefaEmBanco);
 
         return tarefaMapper.toDTO(tarefaEmBanco);
     }
@@ -115,7 +121,7 @@ public class TarefaService {
         emailDTO.setDestinatario(acompanhador.getEmail());
 
         // This sendMail should be removed after we fix ::acompanhadores ADD;;
-        sendMailService.sendMail(emailDTO);
+        // sendMailService.sendMail(emailDTO);
         return emailDTO;
     }
 

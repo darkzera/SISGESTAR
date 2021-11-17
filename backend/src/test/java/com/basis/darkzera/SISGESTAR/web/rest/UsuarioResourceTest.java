@@ -88,7 +88,7 @@ public class UsuarioResourceTest extends BaseIntTest {
     @Test
     public void encontraUsuarioPorHashComSucesso() throws Exception {
         String hashValido = usuarioBuilder.getHashValido(usuarioBuilder.persistirUsuario(
-                usuarioBuilder.createUsuarioDTO()));
+                usuarioBuilder.createUsuarioDTO()).getId());
 
         ResultActions resultActions =
                 mockMvc.perform(get("/api/usuarios/obter-por-hash/" +hashValido))

@@ -5,26 +5,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class TarefaDTO {
-
+public class TarefaDTO implements Serializable {
     private Long id;
     private String nome;
     private String descricao;
     private Long idResponsavel;
     private Long idStatus;
-    private List<UsuarioDTO> acompanhadores = new ArrayList<>();
-    private List<ComentarioDTO> comentarios = new ArrayList<>();
 
-    public TarefaDTO(String nome, String descricao){
-        this.nome = nome;
-        this.descricao = descricao;
-    }
-
+    private List<UsuarioListDTO> acompanhadores = new ArrayList<>();
+    private List<ComentarioListDTO> comentarios = new ArrayList<>();
+    private LocalDateTime dataAbertura;
+    private LocalDateTime dataFechamento;
 }

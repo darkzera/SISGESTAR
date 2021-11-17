@@ -1,0 +1,10 @@
+.myDiv {
+  background-color: lightblue;
+  text-align: center;
+  width: max-content;
+  height: max-content;
+}
+host ::ng-deep p {
+  line-height: 1.5;
+  margin: 0;
+}

@@ -30,4 +30,12 @@
                                  referencedColumnNames="id" />
     </changeSet>
 
+    <changeSet id="202110102120-3" author="lucas.cruz">
+        <addForeignKeyConstraint baseTableName="comentario"
+                                 baseColumnNames="id_usuario"
+                                 constraintName="fk_id_usuario_usuario"
+                                 referencedTableName="usuario"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
 </databaseChangeLog>

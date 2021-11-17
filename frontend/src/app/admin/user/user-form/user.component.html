@@ -1,0 +1,52 @@
+  <form
+    class="ui-g ui-fluid"
+    [formGroup]="form"
+    novalidate
+  >
+    <h1 class="ui-g-12">{{title}}</h1>
+      <div class="ui-g form-group ui-g-12">
+          <div class="ui-g-12 md-inputfield">
+            <label for="nome">{{MSG.USUARIO_NOME}}</label>
+            <input
+              id="nome"
+              class="ui-g-12 ui-md-6"
+              type="text"
+              formControlName="name"
+              pInputText
+            >
+            <span *ngIf="isSubmited" class="ui-message ui-messages-error">{{ getValidationMessages('nome') }}</span>
+          </div>
+          <div class="ui-g-12 md-inputfield">
+            <label for="email">{{MSG.USUARIO_EMAIL}}</label>
+            <input
+              id="email"
+              class="ui-g-12 ui-md-6"
+              type="text"
+              pInputText
+              formControlName="email"
+            >
+            <span *ngIf="isSubmited" class="ui-message ui-messages-error">{{ getValidationMessages('email') }}</span>
+          </div>
+      </div>
+      <div class="ui-g ui-g-12" genericFormFooterButtons>
+          <div class="ui-g-6 ui-md-2">
+              <button
+                pButton
+                type="submit"
+                label="save"
+                (click)="saveForm()"
+                icon="ui-icon-save"
+              ></button>
+          </div>
+          <div class="ui-g-6 ui-md-2">
+              <button
+                class="ui-button-secondary"
+                pButton type="button"
+                label="Limpar Formulario"
+                (click)="clearForm()"
+                icon="ui-icon-cancel"
+              ></button>
+          </div>
+      </div>
+  </form>
+

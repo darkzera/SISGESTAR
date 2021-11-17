@@ -6,13 +6,11 @@ import com.basis.darkzera.SISGESTAR.service.TarefaService;
 import com.basis.darkzera.SISGESTAR.service.dto.TarefaDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.TarefaFilterDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.TarefaListDTO;
-import com.basis.darkzera.SISGESTAR.service.dto.UsuarioDTO;
 import com.basis.darkzera.SISGESTAR.service.mapper.TarefaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

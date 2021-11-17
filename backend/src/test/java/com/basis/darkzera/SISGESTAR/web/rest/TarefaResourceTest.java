@@ -7,6 +7,7 @@ import com.basis.darkzera.SISGESTAR.service.dto.TarefaDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.UsuarioDTO;
 import com.basis.darkzera.SISGESTAR.util.BaseIntTest;
 import com.basis.darkzera.SISGESTAR.util.TestUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
+@Slf4j
 @Transactional
 public class TarefaResourceTest extends BaseIntTest {
 
@@ -33,7 +35,7 @@ public class TarefaResourceTest extends BaseIntTest {
 
     @Test
     public void listarTarefasComSucesso() throws Exception {
-        tarefaBuilder.persistirTarefa(tarefaBuilder.createTarefaDTO());
+        tarefaBuilder.createTarefaDTO();
 
         mockMvc.perform(get("/api/tarefas"))
                 .andExpect(status().isOk())
@@ -75,12 +77,13 @@ public class TarefaResourceTest extends BaseIntTest {
 
     // TODO FIXME
     @Test
-    public void encontrarTarefaComSucesso() throws Exception {
-        TarefaDTO tarefaDTO = tarefaBuilder.persistirTarefa(tarefaBuilder.createTarefaDTO());
-
-        mockMvc.perform(get("/api/tarefas/" + tarefaDTO.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[*]", instanceOf(Tarefa.class)));
+    public void encontrarTarefaPorIdComSucesso() throws Exception {
+        TarefaDTO tarefaDTO = tarefaBuilder.createTarefaDTO();
+        ResultActions resultAction =
+                mockMvc.perform(get("/api/tarefas/" + tarefaDTO.getId()))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.id").value(1))
+                        .andExpect(jsonPath("$.nome").value("Nome teste"));
     }
 
     @Test
@@ -93,22 +96,18 @@ public class TarefaResourceTest extends BaseIntTest {
     @Test
     public void atualizaStatusTarefaComSucess() throws Exception{
         // TODO - Revisar
-        // As implementacoes feitas no *Builder ?
-        // Posso instanciar tambem um UsuarioBuilder na camada de teste de Tarefas?
-
-        UsuarioDTO usuarioResponsavel =
-                usuarioBuilder.persistirUsuario(usuarioBuilder.createUsuarioDTO());
+        // Resumir
         TarefaDTO tarefaDTO = tarefaBuilder.createTarefaDTO();
-        tarefaDTO.setIdResponsavel(usuarioResponsavel.getId());
-        tarefaBuilder.persistirTarefa(tarefaDTO);
-        String responsavelHash = usuarioBuilder.getHashValido(usuarioResponsavel);
+//        tarefaDTO.setIdResponsavel(usuarioResponsavel.getId());
 
-        // TODO: Preciso de um novo DTO exclusivo pra mockar esse teste?
-        /* TarefaAlteraIdDTO
-                idStatus: 1,2
-        */
+        String responsavelHash = usuarioBuilder.getHashValido(tarefaDTO.getIdResponsavel());
         TarefaDTO tarefaNovoStatus = tarefaBuilder.createTarefaDTONovoStatus();
-        mockMvc.perform(patch("/api/tarefas" + tarefaDTO.getId().toString() + "?hash=" + responsavelHash)
+
+        String requestUrl = "/api/tarefas/" + tarefaDTO.getId() + "?hash=" + responsavelHash;
+        log.error("Req: " + requestUrl);
+        log.error("TAref: " + tarefaDTO.getDescricao() + " ID : " + tarefaDTO.getId());
+        log.error("NOvo status para tarefa: " + tarefaNovoStatus.getIdStatus());
+        mockMvc.perform(patch(requestUrl)
                         .content(TestUtil.convertObjectToJsonBytes(tarefaNovoStatus))
                         .contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());

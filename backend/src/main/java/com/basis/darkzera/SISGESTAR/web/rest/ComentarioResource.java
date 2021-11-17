@@ -2,29 +2,31 @@ package com.basis.darkzera.SISGESTAR.web.rest;
 
 import com.basis.darkzera.SISGESTAR.service.ComentarioService;
 import com.basis.darkzera.SISGESTAR.service.dto.ComentarioDTO;
+import com.basis.darkzera.SISGESTAR.service.dto.ComentarioListDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/comentarios/")
+@RequestMapping("/api/comentarios")
 @RequiredArgsConstructor
 public class ComentarioResource {
     private final ComentarioService comentarioService;
 
     @PostMapping
     public ResponseEntity<ComentarioDTO> create(@RequestBody ComentarioDTO comentarioDTO){
+
         return ResponseEntity.ok(
                 comentarioService.save(comentarioDTO)
         );
     }
 
-    @GetMapping
-    ResponseEntity<List<ComentarioDTO>> findAll(){
-        return ResponseEntity.ok(
-                comentarioService.findAll()
-        );
+        @GetMapping("/todosComentarios")
+    public ResponseEntity<Page<ComentarioListDTO>> obterComentariosDoUsuario(@RequestParam("usuario") Long idUsuario,
+                                                                             Pageable p) {
+        return ResponseEntity.ok( comentarioService.findAllByIdUsuario(idUsuario, p) );
     }
 
     @GetMapping("/{id}")

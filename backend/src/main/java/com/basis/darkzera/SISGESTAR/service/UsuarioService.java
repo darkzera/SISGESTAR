@@ -1,12 +1,10 @@
 package com.basis.darkzera.SISGESTAR.service;
 
-import com.basis.darkzera.SISGESTAR.domain.Tarefa;
 import com.basis.darkzera.SISGESTAR.domain.Usuario;
-import com.basis.darkzera.SISGESTAR.domain.enumerations.StatusTarefaEnum;
 import com.basis.darkzera.SISGESTAR.repository.UsuarioRepository;
 import com.basis.darkzera.SISGESTAR.service.dto.EmailDTO;
+import com.basis.darkzera.SISGESTAR.service.dto.SelectDTO;
 import com.basis.darkzera.SISGESTAR.service.dto.UsuarioDTO;
-import com.basis.darkzera.SISGESTAR.service.dto.UsuarioListDTO;
 import com.basis.darkzera.SISGESTAR.service.error.EmailEmUsoException;
 import com.basis.darkzera.SISGESTAR.service.error.UsuarioNaoEncontradoException;
 import com.basis.darkzera.SISGESTAR.service.mapper.UsuarioMapper;
@@ -26,11 +24,17 @@ public class UsuarioService {
 
     private final SendMailService sendMailService;
 
+
     public List<UsuarioDTO> findAll(){
         return usuarioRepository.findAll().stream()
                 .map(usuarioMapper::toDTO)
                 .collect(Collectors.toList());
+    }
 
+    public List<SelectDTO> selectDropDown(){
+        return usuarioRepository.findAll().stream()
+                .map(usuarioMapper::toListSelectDTO)
+                .collect(Collectors.toList());
     }
 
     public UsuarioDTO save(UsuarioDTO usuarioDTO) {
@@ -59,7 +63,6 @@ public class UsuarioService {
                 .orElseThrow(UsuarioNaoEncontradoException::new);
         return usuarioMapper.toDTO(usuarioFound);
     }
-
 
     // TODO - ???? WTF
     private boolean emailExists(Usuario usuario){
