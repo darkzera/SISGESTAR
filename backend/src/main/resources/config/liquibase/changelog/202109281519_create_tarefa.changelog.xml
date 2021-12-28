@@ -1,0 +1,61 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+               http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="202109281519-0" author="flavio.junior">
+        <createTable tableName="tarefa">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="nome" type="varchar(200)" />
+            <column name="descricao" type="varchar(200)" />
+            <column name="id_st_tarefa" type="integer" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202109281519-1" author="lucas.cruz">
+        <createTable tableName="st_tarefa">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="descricao" type="varchar(200)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202109281519-2" author="lucas.cruz">
+        <addForeignKeyConstraint baseTableName="tarefa"
+                                 baseColumnNames="id_st_tarefa"
+                                 constraintName="fk_tarefa_st_tarefa"
+                                 referencedTableName="st_tarefa"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="202109281519-4" author="lucas.cruz">
+        <createTable tableName="comentario">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="titulo" type="varchar(20)" />
+            <column name="descricao" type="varchar(150)" />
+            <column name="data_comentario" type="DATETIME" />
+            <column name="id_tarefa" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_usuario" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202109281519-5" author="lucas.cruz">
+        <addForeignKeyConstraint baseTableName="comentario"
+                                 baseColumnNames="id_tarefa"
+                                 constraintName="fk_id_tarefa_tarefa"
+                                 referencedTableName="tarefa"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+</databaseChangeLog>
